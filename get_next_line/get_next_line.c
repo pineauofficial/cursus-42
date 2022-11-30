@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:18:53 by pineau            #+#    #+#             */
-/*   Updated: 2022/11/30 19:15:00 by pineau           ###   ########.fr       */
+/*   Updated: 2022/11/30 19:18:45 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,3 +37,4 @@ char	*get_next_line(int fd)
 		read(int fd, void *buf, size_t nbytes)
 	}
 }
+test
