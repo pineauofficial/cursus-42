@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 10:18:42 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/01 12:11:45 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/01 14:36:02 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strlen(char *str, char c)
 	int	a;
 
 	a = 0;
+	if (str == NULL)
+		return (0);
 	while (str[a] != '\0' || str[a] != c)
 		a++;
 	return (a);
@@ -46,15 +48,16 @@ char	*ft_strjoin(char *s1, char *s2, char c)
 
 	a = 0;
 	b = 0;
-	if (s1 == NULL || s2 == NULL)
+	if (s2 == NULL)
 		return (NULL);
 	str = malloc(sizeof(char) * (ft_strlen(s1, c) + ft_strlen(s2, c) + 1));
 	if (!str)
 		return (NULL);
-	while (s1[a] != '\0' && s1[a] != c)
-		str[b++] = s1[a++];
+	if (s1 != NULL)
+		while (s1[a] != '\0' || s1[a] != c)
+			str[b++] = s1[a++];
 	a = 0;
-	while (s2[a] != '\0' && s1[a] != c)
+	while (s2[a] != '\0' || s2[a] != c)
 		str[b++] = s2[a++];
 	str[b] = '\0';
 	return (str);

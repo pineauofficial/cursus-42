@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:18:53 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/01 12:14:07 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/01 15:02:56 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,38 @@ char	*get_next_line(int fd)
 	static char	*buf;
 	ssize_t		ftread;
 	int			stop;
-	int			BUFFER_SIZE;	
 
 	stop = 0;
+	buf = malloc(sizeof(char) * BUFFER_SIZE);
 	if (BUFFER_SIZE < 1 || fd < 0)
 		return (NULL);
-	while (strchr(line, '\n') != 0 && stop == 0)
+	while (strchr(buf, '\n') == NULL && stop == 0)
 	{
 		ft_bzero(buf, BUFFER_SIZE);
-		ftread = read(int fd, void *buf, size_t BUFFER_SIZE);
-		if (strchr(line, '\n') == 0)
+		ftread = read(fd, buf, BUFFER_SIZE);
+		//printf("buf : %s\n", buf);
+		if (strchr(buf, '\n') != NULL)
 		{
 			line = ft_strjoin(line, buf, '\n');
 			stop == 1;
+			printf("line : [%s]\n", line);
 		}
 		else
 			line = ft_strjoin(line, buf, '\0');
+		printf("line : [%s]\n", line);
 	}
 	return (line);
 }
 
-int main()
+int	main(void)
 {
-	// compiler avec -D BUFFER_SIZE=n
-	int fd;
-	
+	int	fd;
+
 	fd = open("test.txt", O_RDONLY);
-	printf("%d", fd);
-	printf("%s" ,get_next_line(int fd));
+	printf("%s", get_next_line(fd));
+
 }
+
+// compiler avec -D BUFFER_SIZE=n
+
+// probleme strjoiin essaie de join 0 + bonjo 
