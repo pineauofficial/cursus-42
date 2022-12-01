@@ -6,9 +6,11 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 10:18:42 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/01 10:24:15 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/01 12:11:45 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "get_next_line.h"
 
 int	ft_strlen(char *str, char c)
 {
@@ -36,7 +38,7 @@ char	*ft_strchr(const char *str, int c)
 	return (NULL);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2, char c)
+char	*ft_strjoin(char *s1, char *s2, char c)
 {
 	char	*str;
 	int		a;
