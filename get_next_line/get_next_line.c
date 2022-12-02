@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 15:19:14 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/02 17:33:17 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/02 18:36:05 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,30 @@ char	*ft_fill_line(char *line, char *keep)
 	line = malloc(sizeof(char) * ft_strlen2(keep) + 1);
 	if (!line)
 		return (NULL);
-	while (keep[a] != '\n')
+	while (keep[a] != '\n' && keep[a] != '\0')
 	{
 		line[a] = keep[a];
 		a++;
 	}
 	line[a] = '\n';
 	return (line);
+}
+
+char	*ft_re_fill_keep(char *keep)
+{
+	int	a;
+	int	b;
+
+	a = ft_strlen(keep) - ft_strlen2(keep) - 1;
+	b = 0;
+	while (a > 0)
+	{
+		keep[b] = keep[ft_strlen(keep) - a];
+		a--;
+		b++;
+	}
+	keep[b] = '\0';
+	return (keep);
 }
 
 char	*get_next_line(int fd)
@@ -50,6 +67,8 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE < 1)
 		return (NULL);
+	if (keep != NULL)
+		ft_re_fill_keep(keep);
 	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);

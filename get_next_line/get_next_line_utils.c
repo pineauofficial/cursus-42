@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 15:53:24 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/02 17:09:57 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/02 18:41:37 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	ft_strlen(char *str)
 	int	a;
 
 	a = 0;
+	if (!str)
+		return (0);
 	while (str[a] != '\0')
 		a++;
 	return (a);
