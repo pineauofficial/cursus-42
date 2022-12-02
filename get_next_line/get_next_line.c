@@ -5,51 +5,81 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/30 18:18:53 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/01 15:02:56 by pineau           ###   ########.fr       */
+/*   Created: 2022/12/02 15:19:14 by pineau            #+#    #+#             */
+/*   Updated: 2022/12/02 17:33:17 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+char	*ft_fill_keep(char *keep, char *buf, int fd)
+{
+	ssize_t		ftread;
+
+	ftread = 1;
+	while (ft_strchr(keep, '\n') == NULL && ftread != 0)
+	{
+		ftread = read(fd, buf, BUFFER_SIZE);
+		keep = ft_strjoin(keep, buf);
+	}
+	return (keep);
+}
+
+char	*ft_fill_line(char *line, char *keep)
+{
+	int	a;
+
+	a = 0;
+	line = malloc(sizeof(char) * ft_strlen2(keep) + 1);
+	if (!line)
+		return (NULL);
+	while (keep[a] != '\n')
+	{
+		line[a] = keep[a];
+		a++;
+	}
+	line[a] = '\n';
+	return (line);
+}
+
 char	*get_next_line(int fd)
 {
+	static char	*keep;
+	char		*buf;
 	char		*line;
-	static char	*buf;
-	ssize_t		ftread;
-	int			stop;
 
-	stop = 0;
-	buf = malloc(sizeof(char) * BUFFER_SIZE);
-	if (BUFFER_SIZE < 1 || fd < 0)
+	if (BUFFER_SIZE < 1)
 		return (NULL);
-	while (strchr(buf, '\n') == NULL && stop == 0)
-	{
-		ft_bzero(buf, BUFFER_SIZE);
-		ftread = read(fd, buf, BUFFER_SIZE);
-		//printf("buf : %s\n", buf);
-		if (strchr(buf, '\n') != NULL)
-		{
-			line = ft_strjoin(line, buf, '\n');
-			stop == 1;
-			printf("line : [%s]\n", line);
-		}
-		else
-			line = ft_strjoin(line, buf, '\0');
-		printf("line : [%s]\n", line);
-	}
+	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!buf)
+		return (NULL);
+	keep = ft_fill_keep(keep, buf, fd);
+	if (keep == NULL)
+		return (NULL);
+	line = ft_fill_line(line, keep);
 	return (line);
 }
 
 int	main(void)
 {
 	int	fd;
+	char	*str;
 
 	fd = open("test.txt", O_RDONLY);
-	printf("%s", get_next_line(fd));
-
+	while ((str = get_next_line(fd)))
+	{
+		if (!str)
+			break ;
+		printf("%s", str);
+		printf("-----------------------------\n");
+		free(str);
+	}
 }
 
-// compiler avec -D BUFFER_SIZE=n
+// int	main(void)
+// {
+// 	int	fd;
 
-// probleme strjoiin essaie de join 0 + bonjo 
+// 	fd = open("test.txt", O_RDONLY);
+// 	printf("%s", get_next_line(fd));
+// }

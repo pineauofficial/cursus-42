@@ -5,26 +5,36 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 10:18:42 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/01 14:36:02 by pineau           ###   ########.fr       */
+/*   Created: 2022/12/02 15:53:24 by pineau            #+#    #+#             */
+/*   Updated: 2022/12/02 17:09:57 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(char *str, char c)
+int	ft_strlen2(char *str)
 {
 	int	a;
 
 	a = 0;
-	if (str == NULL)
+	if (!str)
 		return (0);
-	while (str[a] != '\0' || str[a] != c)
+	while (str[a] != '\n')
 		a++;
 	return (a);
 }
 
-char	*ft_strchr(const char *str, int c)
+int	ft_strlen(char *str)
+{
+	int	a;
+
+	a = 0;
+	while (str[a] != '\0')
+		a++;
+	return (a);
+}
+
+char	*ft_strchr(const char *str, char c)
 {
 	int	a;
 
@@ -40,7 +50,7 @@ char	*ft_strchr(const char *str, int c)
 	return (NULL);
 }
 
-char	*ft_strjoin(char *s1, char *s2, char c)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	int		a;
@@ -48,16 +58,18 @@ char	*ft_strjoin(char *s1, char *s2, char c)
 
 	a = 0;
 	b = 0;
-	if (s2 == NULL)
-		return (NULL);
-	str = malloc(sizeof(char) * (ft_strlen(s1, c) + ft_strlen(s2, c) + 1));
+	if (s1 == NULL)
+	{
+		s1 = malloc(sizeof(char) * 1);
+		s1[0] = '\0';
+	}
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!str)
 		return (NULL);
-	if (s1 != NULL)
-		while (s1[a] != '\0' || s1[a] != c)
-			str[b++] = s1[a++];
+	while (s1[a] != '\0')
+		str[b++] = s1[a++];
 	a = 0;
-	while (s2[a] != '\0' || s2[a] != c)
+	while (s2[a] != '\0')
 		str[b++] = s2[a++];
 	str[b] = '\0';
 	return (str);
