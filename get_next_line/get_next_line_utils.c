@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 15:53:24 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/02 18:41:37 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/06 15:55:39 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_strlen2(char *str)
 	a = 0;
 	if (!str)
 		return (0);
-	while (str[a] != '\n')
+	while (str[a] != '\n' && str[a] != '\0')
 		a++;
 	return (a);
 }
@@ -74,18 +74,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[a] != '\0')
 		str[b++] = s2[a++];
 	str[b] = '\0';
+	free(s1);
 	return (str);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	char	*ptr;
-
-	ptr = (char *)s;
-	while (n > 0)
-	{
-		*ptr = '\0';
-		ptr++;
-		n--;
-	}
 }

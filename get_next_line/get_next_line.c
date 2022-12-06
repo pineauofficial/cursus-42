@@ -6,31 +6,18 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 15:19:14 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/02 18:36:05 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/06 16:06:57 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_fill_keep(char *keep, char *buf, int fd)
-{
-	ssize_t		ftread;
-
-	ftread = 1;
-	while (ft_strchr(keep, '\n') == NULL && ftread != 0)
-	{
-		ftread = read(fd, buf, BUFFER_SIZE);
-		keep = ft_strjoin(keep, buf);
-	}
-	return (keep);
-}
 
 char	*ft_fill_line(char *line, char *keep)
 {
 	int	a;
 
 	a = 0;
-	line = malloc(sizeof(char) * ft_strlen2(keep) + 1);
+	line = malloc(sizeof(char) * ft_strlen2(keep) + 2);
 	if (!line)
 		return (NULL);
 	while (keep[a] != '\n' && keep[a] != '\0')
@@ -38,7 +25,8 @@ char	*ft_fill_line(char *line, char *keep)
 		line[a] = keep[a];
 		a++;
 	}
-	line[a] = '\n';
+	line[a] = keep[a];
+	line[a + 1] = '\0';
 	return (line);
 }
 
@@ -59,14 +47,33 @@ char	*ft_re_fill_keep(char *keep)
 	return (keep);
 }
 
+char	*ft_fill_keep(char *keep, char *buf, int fd)
+{
+	ssize_t		ftread;
+
+	ftread = 1;
+	while (ft_strchr(keep, '\n') == NULL && ftread != 0)
+	{
+		ftread = read(fd, buf, BUFFER_SIZE);
+		if (ftread < 0)
+		{
+			free(buf);
+			free(keep);
+			return (NULL);
+		}
+		buf[ftread] = '\0';
+		keep = ft_strjoin(keep, buf);
+	}
+	free(buf);
+	return (keep);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*keep;
 	char		*buf;
 	char		*line;
 
-	if (BUFFER_SIZE < 1)
-		return (NULL);
 	if (keep != NULL)
 		ft_re_fill_keep(keep);
 	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
@@ -76,29 +83,27 @@ char	*get_next_line(int fd)
 	if (keep == NULL)
 		return (NULL);
 	line = ft_fill_line(line, keep);
-	return (line);
-}
-
-int	main(void)
-{
-	int	fd;
-	char	*str;
-
-	fd = open("test.txt", O_RDONLY);
-	while ((str = get_next_line(fd)))
+	if (line[0] == '\0')
 	{
-		if (!str)
-			break ;
-		printf("%s", str);
-		printf("-----------------------------\n");
-		free(str);
+		free(keep);
+		free(line);
+		return (NULL);
 	}
+	return (line);
 }
 
 // int	main(void)
 // {
 // 	int	fd;
+// 	char	*str;
 
-// 	fd = open("test.txt", O_RDONLY);
-// 	printf("%s", get_next_line(fd));
+// 	fd = open("bible.txt", O_RDONLY);
+// 	while ((str = get_next_line(fd)))
+// 	{
+// 		if (!str)
+// 			break ;
+// 		printf("%s", str);
+// 		printf("-----------------------------\n");
+// 		free(str);
+// 	}
 // }
