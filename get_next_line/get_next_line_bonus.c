@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/06 18:22:08 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/08 14:19:33 by pineau           ###   ########.fr       */
+/*   Created: 2022/12/08 14:16:26 by pineau            #+#    #+#             */
+/*   Updated: 2022/12/08 14:19:58 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_fill_line(char *line, char *keep)
 {
@@ -67,50 +67,27 @@ char	*ft_fill_keep(char *keep, char *buf, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*keep;
+	static char	*keep[1024];
 	char		*buf;
 	char		*line;
 
-	if (keep != NULL)
-		ft_re_fill_keep(keep);
+	if (keep[fd] != NULL)
+		ft_re_fill_keep(keep[fd]);
 	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
-	keep = ft_fill_keep(keep, buf, fd);
-	if (keep == NULL)
+	keep[fd] = ft_fill_keep(keep[fd], buf, fd);
+	if (keep[fd] == NULL)
 		return (NULL);
-	line = malloc(sizeof(char) * ft_strlen2(keep) + 2);
+	line = malloc(sizeof(char) * ft_strlen2(keep[fd]) + 2);
 	if (!line)
 		return (NULL);
-	line = ft_fill_line(line, keep);
+	line = ft_fill_line(line, keep[fd]);
 	if (line[0] == '\0')
 	{
-		free(keep);
+		free(keep[fd]);
 		free(line);
 		return (NULL);
 	}
 	return (line);
 }
-
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*str;
-
-// 	fd = open("empty", O_RDONLY);
-
-// 	while ((str = get_next_line(fd)))
-// 	{
-// 		if (!str)
-// 			break ;
-// 		printf("%s", str);
-// 		//printf("-----------------------------\n");
-// 		free(str);
-// 	}
-
-// 	// str = get_next_line(fd);
-// 	// printf("%s", str);
-// 	// free(str);
-
-// 	close(fd);
-// }

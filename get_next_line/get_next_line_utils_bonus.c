@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/06 18:09:42 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/06 18:50:03 by pineau           ###   ########.fr       */
+/*   Created: 2022/12/08 14:15:14 by pineau            #+#    #+#             */
+/*   Updated: 2022/12/08 14:20:03 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_strlen2(char *str)
 {
