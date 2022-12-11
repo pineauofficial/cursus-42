@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:54:36 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/10 18:18:37 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/11 17:17:55 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct t_list {
 }	t_list;
 
 //Fonction pour créer un nouveau noeud dans la liste chaînée
-t_list	*make_nod(int nbr)
+void	*make_nod(int nbr)
 {
 	t_list	*new;
 
@@ -38,9 +38,7 @@ void	add_nod(t_list *head, t_list *new)
 
 	current = head;
 	while (current->next != NULL)
-	{
 		current = current->next;
-	}
 	current->next = new;
 }
 
@@ -141,22 +139,87 @@ void	swap_swap(t_list *head_a, t_list *head_b, int a, int b)
 	swap_b(head_b, b);
 }
 
+//Prend le premier élément au sommet de b et le met sur a
+void	push_a(t_list **head_b, t_list **head_a)
+{
+	t_list	*current;
+	t_list	*new;
+
+	current = *head_b;
+	if (current == NULL)
+		return ;
+	new = malloc(sizeof(t_list));
+	new->nbr = current->nbr;
+	new->next = *head_a;
+	*head_a = new;
+
+	if (current->next != NULL)
+	{
+		*head_b = current->next;
+		free (current);
+	}
+	else
+		(*head_b)->next = NULL;
+}
+
+//Prend le premier élément au sommet de a et le met sur b
+void	push_b(t_list **head_a, t_list **head_b)
+{
+	t_list	*current;
+	t_list	*new;
+
+	current = *head_a;
+	if (current == NULL)
+		return ;
+	new = malloc(sizeof(t_list));
+	new->nbr = current->nbr;
+	new->next = *head_b;
+	*head_b = new;
+	if (current->next != NULL)
+	{
+		*head_a = current->next;
+		free (current);
+	}
+	else
+		(*head_a)->next = NULL;
+}
+
+
 int	main(int argc, char **argv)
 {
-	t_list	*head;
+	t_list	*head_a;
+	t_list	*head_b;
 	int		a;
-	int		n;
+	int		n_a;
+	int		n_b;
 
 	if (argc < 2)
 		return (0);
+	//----liste a----
 	a = 1;
-	head = make_nod(ft_atoi(argv[a]));
+	head_a = make_nod(ft_atoi(argv[a]));
 	while (++a < argc)
-		add_nod(head, make_nod(ft_atoi(argv[a])));
-	display_list(head);
-	n = count_nod(head);
-	swap_a(head, n);
-	display_list(head);
-	free_list(head);
-	return (0);
+		add_nod(head_a, make_nod(ft_atoi(argv[a])));
+	n_a = count_nod(head_a);
+	display_list(head_a);
+	//----liste b----
+	a = 1;
+	head_b = make_nod(ft_atoi(argv[a]));
+	while (++a < argc)
+		add_nod(head_b, make_nod(ft_atoi(argv[a])));
+	n_b = count_nod(head_b);
+	display_list(head_b);
+
+	//----testes----
+	swap_a(head_a, n_a);
+	swap_b(head_b, n_b);
+	swap_swap(head_a, head_b, n_a, n_b);
+	push_a(&head_b, &head_a);
+	push_b(&head_a, &head_b);
+	display_list(head_a);
+	display_list(head_b);
+	//----fin testes----
+
+	free_list(head_b);
+	free_list(head_a);
 }
