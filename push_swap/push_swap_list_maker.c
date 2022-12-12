@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 14:54:36 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/11 17:17:55 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/12 12:56:55 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,51 @@ void	push_b(t_list **head_a, t_list **head_b)
 		(*head_a)->next = NULL;
 }
 
+//Décale d’une position vers le haut tous les élements de la pile a
+void	rotate_a(t_list **head_a)
+{
+	t_list	*current;
+	int		tmp;
+
+	current = *head_a;
+	tmp = current->nbr;
+	if (current == NULL)
+		return ;
+	*head_a = current->next;
+	while (current->next)
+		current = current->next;
+	add_nod(*head_a, make_nod(tmp));
+
+}
+
+//Décale d’une position vers le haut tous les élements de la pile b
+void	rotate_b(t_list **head_b)
+{
+	t_list	*current;
+	int		tmp;
+
+	current = *head_b;
+	tmp = current->nbr;
+	if (current == NULL)
+		return ;
+	*head_b = current->next;
+	while (current->next)
+		current = current->next;
+	add_nod(*head_b, make_nod(tmp));
+}
+
+//ra et rb en même temps
+void	rotate_rotate(t_list **head_a, t_list **head_b)
+{
+	rotate_a(head_a);
+	rotate_b(head_b);
+}
+
+//Décale d’une position vers le bas tous les élements de la pile a
+void	reverse_rotate_a(t_list **head_a)
+{
+	
+}
 
 int	main(int argc, char **argv)
 {
@@ -216,7 +261,12 @@ int	main(int argc, char **argv)
 	swap_swap(head_a, head_b, n_a, n_b);
 	push_a(&head_b, &head_a);
 	push_b(&head_a, &head_b);
+	rotate_a(&head_a);
+	rotate_b(&head_b);
+	rotate_rotate(&head_a, &head_b);
+	printf("liste a : ");
 	display_list(head_a);
+	printf("liste b : ");
 	display_list(head_b);
 	//----fin testes----
 
