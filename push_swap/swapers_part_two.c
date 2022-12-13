@@ -6,40 +6,40 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:08:35 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/12 14:35:14 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/13 15:24:48 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "push_swap.h"
 
 //Décale d’une position vers le haut tous les élements de la pile a
 void	rotate_a(t_list **head_a)
 {
 	t_list	*current;
-	int		tmp;
+	t_list	*tmp;
 
 	current = *head_a;
-	tmp = current->nbr;
-	if (current == NULL)
-		return ;
+	tmp = *head_a;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = current;
 	*head_a = current->next;
-	while (current->next)
-		current = current->next;
-	add_nod(*head_a, make_nod(tmp));
+	current->next = NULL;
 }
 
 //Décale d’une position vers le haut tous les élements de la pile b
 void	rotate_b(t_list **head_b)
 {
 	t_list	*current;
-	int		tmp;
+	t_list	*tmp;
 
 	current = *head_b;
-	tmp = current->nbr;
-	if (current == NULL)
-		return ;
+	tmp = *head_b;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = current;
 	*head_b = current->next;
-	while (current->next)
-		current = current->next;
-	add_nod(*head_b, make_nod(tmp));
+	current->next = NULL;
 }
 
 //ra et rb en même temps
@@ -55,7 +55,6 @@ void	reverse_rotate_a(t_list **head_a)
 	t_list	*current;
 	t_list	*new;
 	t_list	*second_last;
-	int		tmp;
 	int		a;
 
 	a = 0;
@@ -66,8 +65,9 @@ void	reverse_rotate_a(t_list **head_a)
 		current = current->next;
 		a++;
 	}
-	tmp = current->nbr;
 	new = malloc(sizeof(t_list));
+	if (!new)
+		return ;
 	new->nbr = current->nbr;
 	new->next = *head_a;
 	*head_a = new;
@@ -82,7 +82,6 @@ void	reverse_rotate_b(t_list **head_b)
 	t_list	*current;
 	t_list	*new;
 	t_list	*second_last;
-	int		tmp;
 	int		a;
 
 	a = 0;
@@ -93,8 +92,9 @@ void	reverse_rotate_b(t_list **head_b)
 		current = current->next;
 		a++;
 	}
-	tmp = current->nbr;
 	new = malloc(sizeof(t_list));
+	if (!new)
+		return ;
 	new->nbr = current->nbr;
 	new->next = *head_b;
 	*head_b = new;

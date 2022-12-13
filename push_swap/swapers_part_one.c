@@ -6,9 +6,11 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:07:22 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/12 13:13:35 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/13 14:26:37 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "push_swap.h"
 
 //Intervertit les 2 premiers éléments au sommet de la pile a
 void	swap_a(t_list *head, int n)
@@ -51,6 +53,11 @@ void	push_a(t_list **head_b, t_list **head_a)
 	if (current == NULL)
 		return ;
 	new = malloc(sizeof(t_list));
+	if (!new)
+	{
+		free(current);
+		return ;
+	}
 	new->nbr = current->nbr;
 	new->next = *head_a;
 	*head_a = new;
@@ -73,6 +80,11 @@ void	push_b(t_list **head_a, t_list **head_b)
 	if (current == NULL)
 		return ;
 	new = malloc(sizeof(t_list));
+	if (!new)
+	{
+		free(current);
+		return ;
+	}
 	new->nbr = current->nbr;
 	new->next = *head_b;
 	*head_b = new;
