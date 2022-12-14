@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:57:57 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/13 14:33:32 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/14 20:50:39 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	rotate_rotate(t_list **head_a, t_list **head_b);
 void	reverse_rotate_a(t_list **head_a);
 void	reverse_rotate_b(t_list **head_b);
 void	reverse_rotate_reverse_rotate(t_list **head_a, t_list **head_b);
+int		find_middle(t_list *head_a);
+void	separate(t_list **head_a, t_list **head_b);
 int		main(int argc, char **argv);
 
 #endif

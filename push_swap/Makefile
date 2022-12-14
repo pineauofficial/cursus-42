@@ -6,7 +6,7 @@
 #    By: pineau <pineau@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 12:18:17 by pineau            #+#    #+#              #
-#    Updated: 2022/12/13 12:22:46 by pineau           ###   ########.fr        #
+#    Updated: 2022/12/14 20:51:27 by pineau           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS = push_swap.c\
 	swapers_part_one.c\
 	swapers_part_two.c\
 	swapers_part_three.c\
+	check.c\
 	
 ${NAME} : ${OBJS}
 		$(AR) ${NAME} ${OBJS}
