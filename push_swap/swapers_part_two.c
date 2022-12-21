@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:08:35 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/13 15:24:48 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/19 16:14:23 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	rotate_a(t_list **head_a)
 	tmp->next = current;
 	*head_a = current->next;
 	current->next = NULL;
+	write(1, "ra\n", 4);
 }
 
 //Décale d’une position vers le haut tous les élements de la pile b
@@ -40,6 +41,7 @@ void	rotate_b(t_list **head_b)
 	tmp->next = current;
 	*head_b = current->next;
 	current->next = NULL;
+	write(1, "rb\n", 4);
 }
 
 //ra et rb en même temps
@@ -51,55 +53,42 @@ void	rotate_rotate(t_list **head_a, t_list **head_b)
 
 //Décale d’une position vers le bas tous les élements de la pile a
 void	reverse_rotate_a(t_list **head_a)
-{
+{	
 	t_list	*current;
-	t_list	*new;
 	t_list	*second_last;
-	int		a;
 
-	a = 0;
-	second_last = *head_a;
+	second_last = NULL;
 	current = *head_a;
-	while (current->next)
+
+	while (current && current->next)
 	{
+		second_last = current;
 		current = current->next;
-		a++;
 	}
-	new = malloc(sizeof(t_list));
-	if (!new)
+	if (!second_last)
 		return ;
-	new->nbr = current->nbr;
-	new->next = *head_a;
-	*head_a = new;
-	while (a-- > 1)
-		second_last = second_last->next;
 	second_last->next = NULL;
-	free(current);
+	current->next = *head_a;
+	*head_a = current;
 }
 
+//Décale d’une position vers le bas tous les élements de la pile a
 void	reverse_rotate_b(t_list **head_b)
-{
+{	
 	t_list	*current;
-	t_list	*new;
 	t_list	*second_last;
-	int		a;
 
-	a = 0;
-	second_last = *head_b;
+	second_last = NULL;
 	current = *head_b;
-	while (current->next)
+
+	while (current && current->next)
 	{
+		second_last = current;
 		current = current->next;
-		a++;
 	}
-	new = malloc(sizeof(t_list));
-	if (!new)
+	if (!second_last)
 		return ;
-	new->nbr = current->nbr;
-	new->next = *head_b;
-	*head_b = new;
-	while (a-- > 1)
-		second_last = second_last->next;
 	second_last->next = NULL;
-	free(current);
+	current->next = *head_b;
+	*head_b = current;
 }

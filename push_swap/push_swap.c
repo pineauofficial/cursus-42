@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:21:28 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/13 15:22:30 by pineau           ###   ########.fr       */
+/*   Updated: 2022/12/21 17:18:40 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,32 +118,13 @@ int	main(int argc, char **argv)
 	while (++a < argc)
 		add_nod(head_a, make_nod(ft_atoi(argv[a])));
 	n_a = count_nod(head_a);
-	display_list(head_a);
+	//display_list(head_a);
 	//----liste b----
-	a = 1;
-	head_b = make_nod(ft_atoi(argv[a]));
-	while (++a < argc)
-		add_nod(head_b, make_nod(ft_atoi(argv[a])));
+	head_b = NULL;
 	n_b = count_nod(head_b);
-	display_list(head_b);
+	//display_list(head_b);
 
-	//----testes----
-	swap_a(head_a, n_a);
-	swap_b(head_b, n_b);
-	swap_swap(head_a, head_b, n_a, n_b);
-	push_a(&head_b, &head_a);
-	push_b(&head_a, &head_b);
-	rotate_a(&head_a);
-	rotate_b(&head_b);
-	rotate_rotate(&head_a, &head_b);
-	reverse_rotate_a(&head_a);
-	reverse_rotate_b(&head_b);
-	reverse_rotate_reverse_rotate(&head_a, &head_b);
-	printf("liste a : ");
-	display_list(head_a);
-	printf("liste b : ");
-	display_list(head_b);
-	//----fin testes----
+	algo(&head_a, &head_b);
 
 	free_list(head_b);
 	free_list(head_a);
