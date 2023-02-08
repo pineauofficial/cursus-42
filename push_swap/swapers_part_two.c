@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:08:35 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/19 16:14:23 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/08 14:08:58 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	rotate_a(t_list **head_a)
 	tmp->next = current;
 	*head_a = current->next;
 	current->next = NULL;
-	write(1, "ra\n", 4);
+	write(1, "ra\n", 3);
 }
 
 //Décale d’une position vers le haut tous les élements de la pile b
@@ -41,7 +41,7 @@ void	rotate_b(t_list **head_b)
 	tmp->next = current;
 	*head_b = current->next;
 	current->next = NULL;
-	write(1, "rb\n", 4);
+	write(1, "rb\n", 3);
 }
 
 //ra et rb en même temps
@@ -59,7 +59,6 @@ void	reverse_rotate_a(t_list **head_a)
 
 	second_last = NULL;
 	current = *head_a;
-
 	while (current && current->next)
 	{
 		second_last = current;
@@ -70,17 +69,17 @@ void	reverse_rotate_a(t_list **head_a)
 	second_last->next = NULL;
 	current->next = *head_a;
 	*head_a = current;
+	write(1, "rra\n", 4);
 }
 
 //Décale d’une position vers le bas tous les élements de la pile a
 void	reverse_rotate_b(t_list **head_b)
-{	
+{
 	t_list	*current;
 	t_list	*second_last;
 
 	second_last = NULL;
 	current = *head_b;
-
 	while (current && current->next)
 	{
 		second_last = current;
@@ -91,4 +90,5 @@ void	reverse_rotate_b(t_list **head_b)
 	second_last->next = NULL;
 	current->next = *head_b;
 	*head_b = current;
+	write(1, "rrb\n", 4);
 }

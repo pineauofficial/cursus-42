@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:07:22 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/19 16:13:55 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/01 17:03:55 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	swap_a(t_list *head, int n)
 	swap = head->nbr;
 	head->nbr = head->next->nbr;
 	head->next->nbr = swap;
-	write(1, "sa\n", 4);
+	write(1, "sa\n", 3);
 }
 
 //Intervertit les 2 premiers éléments au sommet de la pile b
@@ -39,7 +39,7 @@ void	swap_b(t_list *head, int n)
 	swap = head->nbr;
 	head->nbr = head->next->nbr;
 	head->next->nbr = swap;
-	write(1, "sb\n", 4);
+	write(1, "sb\n", 3);
 }
 
 //sa et sb en même temps
@@ -60,7 +60,7 @@ void	push_a(t_list **head_b, t_list **head_a)
 	*head_b = current->next;
 	current->next = *head_a;
 	*head_a = current;
-	write(1, "pa\n", 4);
+	write(1, "pa\n", 3);
 }
 
 //Prend le premier élément au sommet de a et le met sur b
@@ -74,5 +74,5 @@ void	push_b(t_list **head_a, t_list **head_b)
 	*head_a = current->next;
 	current->next = *head_b;
 	*head_b = current;
-	write(1, "pb\n", 4);
+	write(1, "pb\n", 3);
 }

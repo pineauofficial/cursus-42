@@ -6,85 +6,97 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 13:34:52 by pineau            #+#    #+#             */
-/*   Updated: 2022/12/21 18:54:04 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/08 14:08:32 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	count2_nod(t_list *head)
+//fonction qui trie 3 nombres sur a 
+void	sort_three(t_list **head_a)
 {
-	t_list	*current;
-	int		a;
-
-	a = 0;
-	current = head;
-	while (current != NULL)
-	{
-		current = current->next;
-		a++;
-	}
-	return (a);
+	if ((*head_a)->nbr > (*head_a)->next->nbr)
+		swap_a((*head_a), count2_nod(*head_a));
+	if ((*head_a)->next->nbr > (*head_a)->next->next->nbr)
+		reverse_rotate_a(head_a);
+	if ((*head_a)->nbr > (*head_a)->next->nbr)
+		swap_a((*head_a), count2_nod(*head_a));
 }
 
-void	algo(t_list **head_a, t_list **head_b)
+//pre tri sur b (entre q1 et q2)
+void	algo_part1(t_list **head_a, t_list **head_b, int *t, int l)
 {
-	int		middle;
 	int		size;
-	int		bigger;
-	int		test;
-	t_list	*current;
 
-	current = *head_a;
-	middle = find_middle(head_a);
 	size = count2_nod(*head_a);
-	//on fou la moite sur b
-	while (size)
+	while (inner(*head_a, q(t, 1, l), q(t, 3, l)) && size >= 8)
 	{
-		if ((*head_a)->nbr > middle)
+		if ((*head_a)->nbr >= q(t, 2, l) && (*head_a)->nbr <= q(t, 3, l))
 			push_b(head_a, head_b);
+		else if ((*head_a)->nbr >= q(t, 1, l) && (*head_a)->nbr <= q(t, 2, l))
+		{
+			push_b(head_a, head_b);
+			rotate_b(head_b);
+		}
 		else
 			rotate_a(head_a);
-		size--;
 	}
+}
+
+//pre tri sur b (le reste)
+void	algo_part2(t_list **head_a, t_list **head_b, int *t, int l)
+{
+	int	size;
+
 	size = count2_nod(*head_a);
-	//on trie b et on met sur a
-	while (size)
+	while (size > 3)
 	{
-		bigger = find_bigger(head_a);
-		test = up_or_down(head_a, bigger);
-		while ((*head_a)->nbr != bigger)
+		if ((*head_a)->nbr >= q(t, 2, l))
+			push_b(head_a, head_b);
+		else if ((*head_a)->nbr <= q(t, 2, l))
 		{
-			if (test == 1)
-				rotate_a(head_a);
-			else if(test == 0)
-				reverse_rotate_a(head_a);
+			push_b(head_a, head_b);
+			rotate_b(head_b);
 		}
-		push_b(head_a, head_b);
 		size--;
 	}
-	while (middle)
-	{
-		push_a(head_b, head_a);
-		middle--;
-	}
-	size = count2_nod(*head_b);
+	sort_three(head_a);
+	free(t);
+}
+
+//on repasse sur a en triant
+void	algo_part3(t_list **head_a, t_list **head_b)
+{
+	int	b_move;
+	int	size;
+
+	size = count2_nod((*head_b));
 	while (size)
 	{
-		bigger = find_smaller(head_b);
-		while ((*head_b)->nbr != bigger)
-			rotate_b(head_b);
-		push_a(head_b, head_a);
+		b_move = get_best_move(*head_a, *head_b);
+		insertion_sort(head_a, head_b, b_move);
 		size--;
 	}
 }
 
+//on rotate pour bien mettre le debut au debut
+void	final_rotate(t_list **head_a)
+{
+	t_list	*current;
+	int		i;
 
-
-
-
-
-
-
-
-
+	i = 0;
+	current = *head_a;
+	while (current->nbr != get_min(*head_a))
+	{
+		current = current->next;
+		i++;
+	}
+	while ((*head_a)->nbr != get_min(*head_a))
+	{
+		if (i < count2_nod(*head_a) / 2)
+			rotate_a(head_a);
+		else
+			reverse_rotate_a(head_a);
+	}
+}

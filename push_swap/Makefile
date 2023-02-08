@@ -6,7 +6,7 @@
 #    By: pineau <pineau@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 12:18:17 by pineau            #+#    #+#              #
-#    Updated: 2022/12/14 20:51:27 by pineau           ###   ########.fr        #
+#    Updated: 2023/02/07 18:01:58 by pineau           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,20 +18,25 @@ CFLAGS = -Wall -Werror -Wextra
 
 RM = rm -f
 
-NAME = push_swap.a
+NAME = push_swap
 
 OBJS = ${SRCS:.c=.o}
-
-AR = ar rcs
 
 SRCS = push_swap.c\
 	swapers_part_one.c\
 	swapers_part_two.c\
 	swapers_part_three.c\
 	check.c\
+	algo.c\
+	count.c\
+	get_things.c\
+	tableau.c\
+	sort_algo.c\
+	check_part2.c\
+	
 	
 ${NAME} : ${OBJS}
-		$(AR) ${NAME} ${OBJS}
+		$(CC) ${CFLAGS} ${OBJS} -o ${NAME}
 
 .c.o:
 		${CC} ${CFLAGS} ${INCLUDE} -c $< -o ${<:.c=.o}
