@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:53:00 by pineau            #+#    #+#             */
-/*   Updated: 2023/02/08 14:08:22 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/11 14:37:26 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,14 @@ int	check_all(int argc, char **argv)
 		check(1);
 		return (1);
 	}
-	if (check_sort(argc, argv) == 1)
-	{
-		check(2);
-		return (1);
-	}
 	if (check_numbers(argc, argv) == 1)
 	{
 		check(1);
+		return (1);
+	}
+	if (check_sort(argc, argv) == 1)
+	{
+		check(2);
 		return (1);
 	}
 	return (0);

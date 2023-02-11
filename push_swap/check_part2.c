@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 17:25:43 by pineau            #+#    #+#             */
-/*   Updated: 2023/02/08 13:54:40 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/11 14:50:40 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int	check_numbers(int argc, char **argv)
 	while (argc)
 	{
 		tmp = ft_itoa(ft_atoi(argv[i]));
+		if (!tmp)
+			return (0);
 		if (ft_ato2(argv[i]) > 2147483647 || ft_ato2(argv[i]) < -2147483647 - 1)
 		{
 			free(tmp);

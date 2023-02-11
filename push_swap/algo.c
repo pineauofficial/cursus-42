@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 13:34:52 by pineau            #+#    #+#             */
-/*   Updated: 2023/02/08 14:08:32 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/08 15:00:45 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	sort_three(t_list **head_a)
 		swap_a((*head_a), count2_nod(*head_a));
 }
 
-//pre tri sur b (entre q1 et q2)
+//pre tri sur b (entre q1 et q3)
 void	algo_part1(t_list **head_a, t_list **head_b, int *t, int l)
 {
 	int		size;
@@ -60,7 +60,8 @@ void	algo_part2(t_list **head_a, t_list **head_b, int *t, int l)
 		}
 		size--;
 	}
-	sort_three(head_a);
+	if (count2_nod(*head_a) >= 3)
+		sort_three(head_a);
 	free(t);
 }
 
