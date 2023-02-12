@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:21:28 by pineau            #+#    #+#             */
-/*   Updated: 2023/02/11 14:51:43 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/12 15:08:53 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,20 @@ void	add_nod(t_list *head, t_list *new)
 }
 
 //Fonction pour afficher les valeurs dans la liste chaînée
-void	display_list(t_list *head)
-{
-	t_list	*current;
+// void	display_list(t_list *head)
+// {
+// 	t_list	*current;
 
-	current = head;
-	if (head == NULL)
-		write(1, "mescouilles\n", 12);
-	while (current != NULL)
-	{
-		printf("%d ", current->nbr);
-		current = current->next;
-	}
-	printf("\n");
-}
+// 	current = head;
+// 	if (head == NULL)
+// 		write(1, "mescouilles\n", 12);
+// 	while (current != NULL)
+// 	{
+// 		printf("%d ", current->nbr);
+// 		current = current->next;
+// 	}
+// 	printf("\n");
+// }
 
 //Fonction pour libérer la mémoire occupée par la liste chaînée
 void	free_list(t_list *head)
@@ -80,13 +80,13 @@ void	all(int argc, char **argv)
 		add_nod(head_a, make_nod(ft_atoi(argv[a])));
 	head_b = NULL;
 	tab = tableau(argc, argv);
-	if (!tab)
-		return ;
-	algo_part1(&head_a, &head_b, tab, argc - 1);
-	algo_part2(&head_a, &head_b, tab, argc - 1);
-	algo_part3(&head_a, &head_b);
-	final_rotate(&head_a);
-	display_list(head_a);
+	if (tab != NULL)
+	{
+		algo_part1(&head_a, &head_b, tab, argc - 1);
+		algo_part2(&head_a, &head_b, tab, argc - 1);
+		algo_part3(&head_a, &head_b);
+		final_rotate(&head_a);
+	}
 	free_list(head_b);
 	free_list(head_a);
 }

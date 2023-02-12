@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:57:57 by pineau            #+#    #+#             */
-/*   Updated: 2023/02/08 14:39:06 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/12 14:52:06 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ int		check_numbers(int argc, char **argv);
 int		check(int check);
 int		check_sort(int argc, char **argv);
 int		check_double(int *tab, int size);
+int		*tableau_suite(int argc, int *tab);
 
 #endif

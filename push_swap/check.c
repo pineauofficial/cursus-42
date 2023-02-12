@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:53:00 by pineau            #+#    #+#             */
-/*   Updated: 2023/02/11 14:37:26 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/12 15:23:08 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	check_sort(int argc, char **argv)
 	return (check);
 }
 
-//a finir
 int	check(int check)
 {
 	if (check == 1)
@@ -74,9 +73,15 @@ int	check(int check)
 
 int	check_all(int argc, char **argv)
 {
-	if (check_double(tableau(argc, argv), argc - 1) == 1)
+	int	*tab;
+
+	tab = tableau(argc, argv);
+	if (tab == NULL)
+		return (1);
+	if (check_double(tab, argc - 1) == 1)
 	{
 		check(1);
+		free(tab);
 		return (1);
 	}
 	if (check_numbers(argc, argv) == 1)

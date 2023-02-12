@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 15:23:50 by pineau            #+#    #+#             */
-/*   Updated: 2023/02/07 18:15:58 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/12 15:04:15 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,12 @@ int	*malloc_tab(int argc)
 	return (tab);
 }
 
-int	*tableau(int argc, char **argv)
+int	*tableau_suite(int argc, int *tab)
 {
-	int	*tab;
 	int	i;
 	int	j;
 	int	swap;
 
-	i = -1;
-	tab = malloc_tab(argc);
-	while (++i < argc - 1)
-		tab[i] = ft_atoi(argv[i + 1]);
 	i = -1;
 	while (++i != argc - 1)
 	{
@@ -69,6 +64,21 @@ int	*tableau(int argc, char **argv)
 			j++;
 		}
 	}
+	return (tab);
+}
+
+int	*tableau(int argc, char **argv)
+{
+	int	*tab;
+	int	i;
+
+	i = -1;
+	tab = malloc_tab(argc);
+	if (tab == NULL)
+		return (NULL);
+	while (++i < argc - 1)
+		tab[i] = ft_atoi(argv[i + 1]);
+	tab = tableau_suite(argc, tab);
 	return (tab);
 }
 
