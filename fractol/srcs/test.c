@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:25:42 by pineau            #+#    #+#             */
-/*   Updated: 2023/02/15 16:30:42 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/15 17:46:53 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,18 @@ void	draw(t_fractal *fractol, t_data *img)
 
 int	handle_key_press(int keycode, t_fractal *fractol)
 {
-	// if (keycode == ESC_KEY)
-	// {
+	if (keycode == 65307)
+	{
 		mlx_destroy_window(fractol->mlx, fractol->win);
 		exit(0);
-	// }
-	// return (0);
+	}
+	return (0);
+}
+
+int cross_press(t_fractal *fractol)
+{
+	mlx_loop_end(fractol->mlx);
+	return (0);
 }
 
 int	main(void)
@@ -67,9 +73,7 @@ int	main(void)
 
 	initi_window(&fractol);
 	draw(&fractol, &img);
-	mlx_hook(fractol.win, 2, 1L<<0, handle_key_press, &fractol);
+	mlx_hook(fractol.win, 2, 1L << 0, handle_key_press, &fractol);
+	mlx_hook(fractol.win, 33, 1L << 5, cross_press, &fractol);
 	mlx_loop(fractol.mlx);
-
 }
-
-
