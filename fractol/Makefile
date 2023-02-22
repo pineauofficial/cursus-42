@@ -6,7 +6,7 @@
 #    By: pineau <pineau@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/11 17:00:47 by pineau            #+#    #+#              #
-#    Updated: 2023/02/15 15:13:00 by pineau           ###   ########.fr        #
+#    Updated: 2023/02/22 23:39:39 by pineau           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,11 @@ SRC_PATH    =    ./srcs/
 SRC            =    \
                 fractol.c\
 				test.c\
+				test2.c\
+				input.c\
+				window.c\
+				moves.c\
+				fractal.c\
                     
 SRCS        = $(addprefix $(SRC_PATH), $(SRC))
 

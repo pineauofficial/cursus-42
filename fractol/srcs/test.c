@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:25:42 by pineau            #+#    #+#             */
-/*   Updated: 2023/02/15 17:46:53 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/20 15:33:59 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "fractol.h"
 #include "key_code.h"
 
+/*
 void	initi_window(t_fractal *fractol)
 {
 	fractol->mlx = mlx_init();
@@ -50,6 +51,7 @@ void	draw(t_fractal *fractol, t_data *img)
 	mlx_put_image_to_window(fractol->mlx, fractol->win, img->img, 0, 0);
 }
 
+//ferme la fenetre avec escape
 int	handle_key_press(int keycode, t_fractal *fractol)
 {
 	if (keycode == 65307)
@@ -60,9 +62,22 @@ int	handle_key_press(int keycode, t_fractal *fractol)
 	return (0);
 }
 
+//ferme la fenetre avec la croix
 int cross_press(t_fractal *fractol)
 {
 	mlx_loop_end(fractol->mlx);
+	return (0);
+}
+
+//ferme la fenetre avec clic gauche (segfault)
+int mouse_hook (int keycode, t_fractal *fractol)
+{
+	if (keycode == 1)
+	{
+		mlx_destroy_window(fractol->mlx, fractol->win);
+		free(fractol);
+		exit(0);
+	}
 	return (0);
 }
 
@@ -75,5 +90,7 @@ int	main(void)
 	draw(&fractol, &img);
 	mlx_hook(fractol.win, 2, 1L << 0, handle_key_press, &fractol);
 	mlx_hook(fractol.win, 33, 1L << 5, cross_press, &fractol);
+	mlx_mouse_hook(fractol.win, mouse_hook, &fractol);
 	mlx_loop(fractol.mlx);
 }
+*/

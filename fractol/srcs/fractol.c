@@ -6,29 +6,78 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:18:08 by pineau            #+#    #+#             */
-/*   Updated: 2023/02/15 14:24:15 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/22 01:21:42 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
+#include <stdlib.h>
 #include "fractol.h"
+#include "key_code.h"
 
 /*
+typedef struct s_fractal {
+	int					width;
+	int					height;
+	int					max_iter;
+	double				factor_r;
+	double				factor_i;
+	struct s_complex	*min;
+	struct s_complex	*max;
+}	t_fractal;
 
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
+typedef struct s_complex {
+	double	r;
+	double	i;
+}	t_complex;
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+int	mandelbrot(t_complex c, int max_iter)
 {
-	char	*dst;
+	t_complex	z;
+	t_complex	tmp;
+	int			i;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	z.i = 0;
+	z.r = 0;
+	i = 0;
+	while (z.r * z.r + z.i * z.i < 4 && i < max_iter)
+	{
+		tmp.r = z.r * z.r - z.i * z.i, 2 * z.r * z.i;
+		tmp.i = z.r * z.r - z.i * z.i, 2 * z.r * z.i;
+		z.r = tmp.r + c.r;
+		z.i = tmp.i + c.i;
+		i++;
+	}
+	return (i);
+}
+
+void draw_fractal(void *mlx, void *win, void *img, int *data, t_fractal *fractal)
+{
+	t_complex	c;
+	int			color;
+	int			x;
+	int			y;
+
+	c.r = 0;
+	c.i = 0;
+	y = 0;
+	while (y < fractal->height)
+	{
+		c.i = fractal->max->i - y * fractal->factor_i;
+		x = 0;
+		while (x < fractal->width)
+		{
+			c.r = fractal->min->r + x * fractal->factor_r;
+			color = mandelbrot(c, fractal->max_iter);
+			if (color == fractal->max_iter)
+				data[y * fractal->width + x] = create_trgb(0, 10, 20, 30);
+			else
+				data[y * fractal->width + x] = color * create_trgb(0, 10, 20, 30);
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(mlx, win, img, 0, 0);
 }
 
 int	create_trgb(int t, int r, int g, int b)
@@ -36,80 +85,41 @@ int	create_trgb(int t, int r, int g, int b)
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-int	handle_key_press(int keycode, void *mlx_ptr, void *win_ptr)
-{
-	if (keycode == 27)
-	{
-		mlx_destroy_window(mlx_ptr, win_ptr);
-		exit(0);
-	}
-	return (0);
-}
-
-typedef struct s_fractal
-{
-    int width;
-    int height;
-    double x_min;
-    double x_max;
-    double y_min;
-    double y_max;
-    int max_iterations;
-    int (*algorithm)(double, double, int);
-    void *mlx_ptr;
-    void *win_ptr;
-    int *colors;
-} t_fractal;
-
 int	main(void)
 {
-	t_data	img;
-	void	*mlx;
-	void	*mlx_win;
-	int		i;
-	int		j;
-	int		tmp_i;
-	int		tmp_j;
+	t_fractal	fractal;
+	void		*mlx;
+	void		*win;
+	void		*img;
+	int			*data;
+	int	endian;
+	int	bits_per_pixel;
+	int	size_line;
 
-	i = 1;
-	j = 1;
+	t_complex	min;
+	t_complex	max;
+	bits_per_pixel = 32;
+	size_line = fractal.width * sizeof(int);
+	endian = 0;
+
+	max.r = 0.5;
+	max.i = 1.2;
+	min.r = -2;
+	min.i = -1.2;
+	fractal.width = 1200;
+	fractal.height = 500;
+	fractal.max_iter = 256;
+	fractal.factor_r = (max.r - min.r) / (double)(fractal.width - 1);
+	fractal.factor_i = (max.i - min.i) / (double)(fractal.height - 1);
+	fractal.min = &min;
+	fractal.max = &max;
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-			&img.endian);
-	tmp_i = 1900;
-	tmp_j = 1060;
-	while (tmp_i > 0 && tmp_j > 0)
-	{
-		while (j > 0)
-		{
-			while (i > 0)
-			{
-				while (j < tmp_j)
-				{
-					while (i < tmp_i)
-					{
-						my_mlx_pixel_put(&img, i, j, create_trgb(100, 100, 100, 100));
-						i++;
-					}
-					my_mlx_pixel_put(&img, i, j, create_trgb(50, 50, 50, 50));
-					j++;
-				}
-				my_mlx_pixel_put(&img, i, j, create_trgb(10, 200, 8, 70));
-				i--;
-			}
-			my_mlx_pixel_put(&img, i, j, create_trgb(250, 30, 250, 150));
-			j--;
-		}
-		tmp_i = tmp_i - 20;
-		tmp_j = tmp_j - 20;
-		i = 1900 - tmp_i;
-		j = 1060 - tmp_j;
-	}
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	win = mlx_new_window(mlx, fractal.width, fractal.height, "Mandelbrot Set");
+	img = mlx_new_image(mlx, fractal.width, fractal.height);
+	data = (int *)mlx_get_data_addr(img, &bits_per_pixel, &size_line, &endian);
+	draw_fractal(mlx, win, img, data, &fractal);
 	mlx_loop(mlx);
-	handle_key_press(14, mlx, mlx_win);
+	return (0);
 }
 
 */
