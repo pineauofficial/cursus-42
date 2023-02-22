@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:08:11 by pineau            #+#    #+#             */
-/*   Updated: 2023/02/22 23:54:24 by pineau           ###   ########.fr       */
+/*   Updated: 2023/02/23 00:17:30 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ void	draw_fractal(t_fractal *fractal, t_mlx *mlx, t_img *img);
 void	draw_mandelbrot(t_fractal *fractal, int x, int y);
 void	draw_julia(t_fractal *fractal, int x, int y);
 void	draw_nova(t_fractal *fractal, int x, int y);
+int		create_trgb(int t, int r, int g, int b);
 
 #endif
