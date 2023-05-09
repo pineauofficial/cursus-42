@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 17:20:53 by pineau            #+#    #+#             */
-/*   Updated: 2023/05/03 15:02:51 by pineau           ###   ########.fr       */
+/*   Updated: 2023/05/09 16:05:01 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_all(char **tab)
 		free(tab[i]);
 		i++;
 	}
+	free(tab);
 }
 
 static int	count2(char const *s, char c)

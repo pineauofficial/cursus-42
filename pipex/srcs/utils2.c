@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 17:43:57 by pineau            #+#    #+#             */
-/*   Updated: 2023/04/26 15:36:05 by pineau           ###   ########.fr       */
+/*   Updated: 2023/05/09 18:41:26 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-void	ft_putstr(char *s)
-{
-	int	a;
-
-	a = 0;
-	while (s[a] != '\0')
-	{
-		write(2, &s[a], 1);
-		a++;
-	}
-}
-
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	a;
@@ -79,4 +67,15 @@ void	error(int i, char **cmd)
 		perror("open");
 	else if (i == 4)
 		perror("pipe");
+}
+
+void	end_process(int i, int *pipe_fd)
+{
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
+	while (i > 2)
+	{
+		wait(NULL);
+		i--;
+	}
 }

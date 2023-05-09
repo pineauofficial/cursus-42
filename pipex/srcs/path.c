@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:33:22 by pineau            #+#    #+#             */
-/*   Updated: 2023/04/21 18:10:53 by pineau           ###   ########.fr       */
+/*   Updated: 2023/05/09 18:41:02 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if ((size_t)start > ft_strlen(s))
 	{
 		str = malloc(sizeof(char) * (1));
+		if (!str)
+			return (NULL);
 		*str = '\0';
 		return (str);
 	}
@@ -29,12 +31,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	str = malloc(sizeof(char) * len + 1);
 	if (!str)
 		return (NULL);
-	while (len > 0)
+	while (len-- > 0)
 	{
 		str[a] = s[start];
 		a++;
 		start++;
-		len--;
 	}
 	str[a] = '\0';
 	return (str);
@@ -88,12 +89,15 @@ char	*make_path(char **env, char **argv, int i)
 	j = 0;
 	while (all_path[j])
 	{
-		str = ft_strjoin(all_path[j], "/");
-		str = ft_strjoin(str, cmd[0]);
+		str = ft_strjoin2(all_path[j], "/");
+		str = ft_strjoin2(str, cmd[0]);
 		if (access(str, F_OK | X_OK) == 0)
 			return (str);
 		free(str);
 		j++;
 	}
-	return (str);
+	free(all_path);
+	free(cmd[0]);
+	free(cmd);
+	return (NULL);
 }

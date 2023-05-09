@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 17:22:00 by pineau            #+#    #+#             */
-/*   Updated: 2023/05/08 15:14:59 by pineau           ###   ########.fr       */
+/*   Updated: 2023/05/09 18:30:49 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,13 @@ int	*get_next_line(int fd, char **buff)
 	line = ft_fill_line(line, keep);
 	*buff = line;
 	if (line[0] == '\0')
-	{
-		printf("%s\n", "LALALA");
-		free(keep);
-		free(line);
-		return (NULL);
-	}
+		end_gnl(keep, line);
 	return (0);
+}
+
+void	end_gnl(char *keep, char *line)
+{
+	free(keep);
+	free(line);
+	return ;
 }
