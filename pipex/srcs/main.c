@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:38:39 by pineau            #+#    #+#             */
-/*   Updated: 2023/05/09 18:42:12 by pineau           ###   ########.fr       */
+/*   Updated: 2023/05/09 18:49:09 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	last_exec(char **env, char **argv, int argc)
 
 int	main(int argc, char **argv, char **env)
 {
-	if (argc != 6)
+	if (argc != 5)
 		return (0);
 	process(argc, argv, env);
 }

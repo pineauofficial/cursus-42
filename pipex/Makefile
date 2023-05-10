@@ -6,7 +6,7 @@
 #    By: pineau <pineau@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/10 12:27:17 by pineau            #+#    #+#              #
-#    Updated: 2023/05/08 14:50:05 by pineau           ###   ########.fr        #
+#    Updated: 2023/05/10 14:57:04 by pineau           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC	= \
 		utils.c\
 		utils2.c\
 		path.c\
+		utils3.c\
 		
 
 BONUS_SRC_PATH = ./srcs_bonus/

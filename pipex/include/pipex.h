@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:38:28 by pineau            #+#    #+#             */
-/*   Updated: 2023/05/09 18:31:34 by pineau           ###   ########.fr       */
+/*   Updated: 2023/05/10 14:27:53 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,7 @@ char	*get_brut_path(char **env);
 char	**get_paths(char **env);
 char	*make_path(char **env, char **argv, int i);
 
+
+
+void	ft_putstr(char *s);
 #endif

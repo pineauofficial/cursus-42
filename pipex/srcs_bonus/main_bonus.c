@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:38:39 by pineau            #+#    #+#             */
-/*   Updated: 2023/05/09 18:38:15 by pineau           ###   ########.fr       */
+/*   Updated: 2023/05/10 18:42:35 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	child(int *pipe_fd, char **argv, char **env, int i)
 		error(1, NULL);
 	if (pid == 0)
 	{
-		dup2(pipe_fd[1], 1);
 		close(pipe_fd[0]);
+		dup2(pipe_fd[1], 1);
 		close(pipe_fd[1]);
 		execute(argv, env, i);
 	}
@@ -82,7 +82,7 @@ void	last_exec(char **env, char **argv, int argc)
 
 int	main(int argc, char **argv, char **env)
 {
-	if (argc < 6)
+	if (argc < 5)
 		return (0);
 	if (argc == 6 && ft_strcmp(argv[1], "here_doc") == 0)
 	{
@@ -90,29 +90,46 @@ int	main(int argc, char **argv, char **env)
 		return (0);
 	}
 	process(argc, argv, env);
+	return (0);
 }
 
 void	process(int argc, char **argv, char **env)
 {
-	int		fd;
+	int		fd1;
+	int		fd2;
 	int		i;
 	int		pipe_fd[2];
 
-	fd = open(argv[1], O_RDONLY, 0777);
-	if (fd == -1)
+	fd1 = open(argv[1], O_RDONLY, 0777);
+	if (fd1 == -1)
 		error(3, NULL);
-	dup2(fd, 0);
-	close(fd);
 	i = 1;
 	while (++i < argc -2)
 		child(pipe_fd, argv, env, i);
-	fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (fd == -1)
+	fd2 = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (fd2 == -1)
 		error(3, NULL);
-	dup2(fd, 1);
-	if (ft_strcmp(argv[1], "/dev/stdin") == 0)
-		dup2(pipe_fd[0], 0);
-	close(fd);
+	dup2(fd2, 1);
 	last_exec(env, argv, argc);
+	dup2(fd1, 0);
+	dup2(fd2, 1);
+	close(fd1);
+	close(fd2);
 	end_process(i, pipe_fd);
 }
+
+
+
+/*
+-----TESTES-----
+./pipex_bonus /dev/stdin "joebfubf" "ls" "wc -l" file2
+./pipex_bonus file "cat" "ls" file2
+./pipex_bonus /dev/stdin "cat" "ls" /dev/stdout
+./pipex_bonus file cat file2
+./pipex_bonus /dev/stdin "cat" "rev" "ls" file2 -> doit boucler a l'infini
+./pipex_bonus /dev/stdin "cat" "rev" "ls" "wc -l" /dev/stdout -> doit boucler a l'infini
+
+
+ 
+./pipex_bonus /dev/stdin "rjurjurj" "cat" "rev" "ls" "wc -l" /dev/stdout
+*/

@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 17:43:57 by pineau            #+#    #+#             */
-/*   Updated: 2023/05/09 18:37:34 by pineau           ###   ########.fr       */
+/*   Updated: 2023/05/10 18:21:39 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	error(int i, char **cmd)
 	else if (i == 2)
 	{
 		free_all(cmd);
+		free(cmd);
 		perror("execve");
 	}
 	else if (i == 3)
