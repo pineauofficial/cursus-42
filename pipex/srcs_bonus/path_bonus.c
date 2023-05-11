@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:33:22 by pineau            #+#    #+#             */
-/*   Updated: 2023/05/10 14:59:47 by pineau           ###   ########.fr       */
+/*   Updated: 2023/05/11 17:13:06 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,33 @@ char	*make_path(char **env, char **argv, int i)
 	free(cmd[0]);
 	free(cmd);
 	return (NULL);
+}
+
+int	check_argv(char **argv, int argc, int mode)
+{
+	int	i;
+
+	if (mode == 1)
+	{
+		i = 2;
+		while (argc > 3)
+		{
+			if (!argv[i][0])
+				return (-1);
+			argc--;
+			i++;
+		}
+	}
+	else
+	{
+		i = 3;
+		while (argc > 3)
+		{
+			if (!argv[i][0])
+				return (-1);
+			argc--;
+			i++;
+		}
+	}
+	return (0);
 }

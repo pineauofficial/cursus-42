@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:38:28 by pineau            #+#    #+#             */
-/*   Updated: 2023/05/10 14:27:53 by pineau           ###   ########.fr       */
+/*   Updated: 2023/05/11 16:21:03 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,10 @@
 # include <fcntl.h>
 # include <string.h>
 
-/*----------MANDATORY---------*/
 
-/*main.c*/
-void	child1(char **argv, int *pipe_fd, char **env);
-void	child2(char **argv, int *pipe_fd, char **env);
+/*---------BONUS && MANDATORY---------*/
 
-/*utils.c*/
-char	**ft_split(char const *s, char c);
-void	free_all(char **tab);
-
-/*utils2.c*/
-char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_strlen(const char *s);
-void	ft_putstr(char *s);
-int		ft_strcmp(char *s1, char *s2);
-void	error(int i, char **cmd);
-
-/*path.c*/
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*get_brut_path(char **env);
-char	**get_paths(char **env);
-char	*make_path(char **env, char **argv, int i);
-
-/*---------BONUS---------*/
-
-/*main_bonus.c*/
+/*main_bonus.c*/ /*main*/
 void	child(int *pipe_fd, char **argv, char **env, int i);
 void	execute(char **argv, char **env, int i);
 void	last_exec(char **env, char **argv, int argc);
@@ -72,24 +50,23 @@ char	*ft_strchr(const char *str, char c);
 int		ft_strlen3(char *str);
 int		ft_strlen2(char *str);
 
-/*utils.c*/
+/*utils_bonus.c*/ /*utils.c*/
 void	free_all(char **tab);
 char	**ft_split(char const *s, char c);
 
-/*utils2_bonus.c*/
+/*utils2_bonus.c*/ /*utils2.c*/
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strcmp(char *s1, char *s2);
-void	error(int i, char **cmd);
+void	error(int i, char **cmd, char *argv);
 void	end_process(int i, int *pipe_fd);
 
-/*path_bonus.c*/
+/*path_bonus.c*/ /*path*/
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*get_brut_path(char **env);
 char	**get_paths(char **env);
 char	*make_path(char **env, char **argv, int i);
+int		check_argv(char **argv, int argc, int mode);
 
 
-
-void	ft_putstr(char *s);
 #endif

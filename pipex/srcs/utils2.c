@@ -6,7 +6,7 @@
 /*   By: pineau <pineau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 17:43:57 by pineau            #+#    #+#             */
-/*   Updated: 2023/05/09 18:41:26 by pineau           ###   ########.fr       */
+/*   Updated: 2023/05/11 16:38:21 by pineau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,31 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[a] - s2[a]);
 }
 
-void	error(int i, char **cmd)
+void	error(int i, char **cmd, char *argv)
 {
 	if (i == 1)
+	{
+		free_all(cmd);
+		free(cmd);
 		perror("fork");
+		exit(0);
+	}
 	else if (i == 2)
 	{
 		free_all(cmd);
+		free(cmd);
 		perror("execve");
 	}
 	else if (i == 3)
 		perror("open");
 	else if (i == 4)
 		perror("pipe");
+	else if (i == 5)
+	{
+		write(2, "zsh: command not found: ", 24);
+		write(2, argv, ft_strlen(argv));
+		write(2, "\n", 1);
+	}
 }
 
 void	end_process(int i, int *pipe_fd)
